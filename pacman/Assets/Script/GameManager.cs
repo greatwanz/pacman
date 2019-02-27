@@ -5,6 +5,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public bool showMainMenu;
     [AssertNotNull]public GameObject titleScreenUI;
     [AssertNotNull]public GameObject gameScreenUI;
     [AssertNotNull]public GameObject gameScreenObjects;
@@ -16,9 +17,9 @@ public class GameManager : MonoBehaviour
             AttributeAssert(AssertFieldNotNull);
         }
 
-        titleScreenUI.SetActive(true);
-        gameScreenUI.SetActive(false);
-        gameScreenObjects.SetActive(false);
+        titleScreenUI.SetActive(showMainMenu);
+        gameScreenUI.SetActive(!showMainMenu);
+        gameScreenObjects.SetActive(!showMainMenu);
     }
 
     void Start()
