@@ -1,12 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
+using UnityEngine.UI;
 
+/// <summary>
+/// Player controller that controls pacman
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class Controller : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    [AssertNotNull]public Text scoreText;
     public float thrust;
     Rigidbody rb;
+
+    public int Score
+    {
+        set
+        { 
+            score_backing = value;
+            scoreText.text = "Score: " + score_backing;
+        }
+        get
+        {
+            return score_backing;
+        }
+    }
+
+    private int score_backing;
 
     void Start()
     {
