@@ -1,0 +1,13 @@
+This project uses the following items from Poly (http://poly.google.com):
+
+Title: PacMan
+Author: Teh LaughingMan
+URL: https://poly.google.com/view/bw8ym2WzYLK
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: TheWaveVR Pacman SXSW Stage
+Author: Clarke Nordhauser (Grimecraft)
+URL: https://poly.google.com/view/d6tyvZZhmRJ
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
