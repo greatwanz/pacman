@@ -14,3 +14,5 @@ MonoBehaviour:
   pacdotScoreValue: 10
   powerPelletScoreValue: 50
   startingLives: 4
+  freightenedColour: {r: 0, g: 0, b: 1, a: 0}
+  frightenedLoopCount: 0

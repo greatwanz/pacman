@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
-  powerPelletSFX: {fileID: 8300000, guid: ea5690a7a6bde034eb1152fedfac64c5, type: 3}
+  frightenedState: {fileID: 11400000, guid: 83e054b6080cbf2438592216e0526d7f, type: 2}
 --- !u!135 &135363928425542574
 SphereCollider:
   m_ObjectHideFlags: 1

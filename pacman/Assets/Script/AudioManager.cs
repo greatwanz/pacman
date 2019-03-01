@@ -56,6 +56,23 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(clip);
     }
 
+    public static IEnumerator PlayLoopedMusic(AudioClip clip, int count)
+    {
+        AudioClip prevClip = null;
+        if (musicSource.clip != null)
+            prevClip = musicSource.clip;
+        
+        musicSource.clip = clip;
+        musicSource.Play();
+        while (count > 0)
+        {
+            yield return new WaitForSeconds(clip.length);
+            count--;
+        }
+        musicSource.clip = prevClip;
+        musicSource.Play();
+    }
+
     public static IEnumerator PlayLoopedSFX(AudioClip clip, int count)
     {
         for (int i = 0; i < count; ++i)

@@ -7,16 +7,18 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [NonSerialized]public static PacmanController[] players;
+    [NonSerialized]public static Ghost[] ghosts;
+
     public bool showMainMenu;
-    public PacmanController[] players;
+    [AssertNotNull]public Transform playersTransform;
+    [AssertNotNull]public Transform ghostsTransform;
     [AssertNotNull]public GameObject titleScreenUI;
     [AssertNotNull]public GameObject gameScreenUI;
     [AssertNotNull]public GameObject gameScreenObjects;
     [AssertNotNull]public Transform pacdotsTransform;
     [AssertNotNull]public Text endGameText;
-    [AssertNotNull]public AudioClip siren;
-    [AssertNotNull]public AudioClip intermission;
-    [AssertNotNull]public AudioClip death;
+    [AssertNotNull]public AudioResources audioResources;
 
     void Awake()
     {
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
         titleScreenUI.SetActive(showMainMenu);
         gameScreenUI.SetActive(!showMainMenu);
         gameScreenObjects.SetActive(!showMainMenu);
+        players = playersTransform.GetComponentsInChildren<PacmanController>(true);
+        ghosts = ghostsTransform.GetComponentsInChildren<Ghost>(true);
     }
 
     void Start()
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayingGame()
     {
-        AudioManager.PlayMusic(siren);
+        AudioManager.PlayMusic(audioResources.sirenSFX);
         gameScreenUI.SetActive(true);
         gameScreenObjects.SetActive(true);
         yield return new WaitUntil(() => pacdotsTransform.childCount == 0 || players.Any(p => p.lives == 0));
@@ -70,11 +74,11 @@ public class GameManager : MonoBehaviour
         if (pacdotsTransform.childCount == 0)
         {
             yield return new WaitForSeconds(2f);
-            AudioManager.PlaySFX(intermission);
+            AudioManager.PlaySFX(audioResources.intermissionMusic);
         }
         else
         {
-            AudioManager.PlaySFX(death);
+//            AudioManager.PlaySFX(death);
         }
         yield return null;
     }

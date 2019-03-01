@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerPelletConsumable : Consumable
 {
-    public AudioClip powerPelletSFX;
+    public GhostState frightenedState;
 
     protected override void OnTriggerEnter(Collider col)
     {
@@ -12,9 +12,22 @@ public class PowerPelletConsumable : Consumable
         {
             PacmanController p = col.GetComponent<PacmanController>();
             p.Score += constants.powerPelletScoreValue;
-            p.StartCoroutine(AudioManager.PlayLoopedSFX(powerPelletSFX, 10));
+
+            constants.frightenedLoopCount = 5;
+            if (p.frightenedCoroutine == null)
+            {
+                AudioManager.PlayMusic(frightenedState.audioResources.powerPelletSFX);
+                p.frightenedCoroutine = p.StartCoroutine(p.PlaySiren(frightenedState));
+            }
+
+            foreach (Ghost g in GameManager.ghosts)
+            {
+                g.SetState(frightenedState);
+            }
             Destroy(gameObject);
         }
     }
+
+
 
 }

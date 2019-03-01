@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PacdotConsumable : Consumable
 {
-    public AudioClip wakaSFX;
+    public static int wakaIndex;
+
+    public AudioClip waSFX;
+    public AudioClip kaSFX;
 
     protected override void OnTriggerEnter(Collider col)
     {
@@ -12,7 +13,13 @@ public class PacdotConsumable : Consumable
         {
             PacmanController p = col.GetComponent<PacmanController>();
             p.Score += constants.pacdotScoreValue;
-            p.controllerAudioSource.PlayOneShot(wakaSFX);
+
+            if (wakaIndex % 2 == 0)
+                p.controllerAudioSource.PlayOneShot(waSFX);
+            else
+                p.controllerAudioSource.PlayOneShot(kaSFX);
+            
+            wakaIndex++;
             Destroy(gameObject);
         }
     }

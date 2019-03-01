@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1836555856842984}
+  m_RootGameObject: {fileID: 1953799398355710}
   m_IsPrefabAsset: 1
---- !u!1 &1836555856842984
+--- !u!1 &1953799398355710
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4288281087150712}
-  - component: {fileID: 33538295312521020}
-  - component: {fileID: 23236237597667644}
-  - component: {fileID: 135363928425542574}
-  - component: {fileID: 114748543934881190}
+  - component: {fileID: 4874236084790828}
+  - component: {fileID: 33978121894211612}
+  - component: {fileID: 23637922924452834}
+  - component: {fileID: 135521451514095666}
+  - component: {fileID: 114796871963293996}
   m_Layer: 0
-  m_Name: Pacdot
+  m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4288281087150712
+--- !u!4 &4874236084790828
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836555856842984}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9499965, y: 4.8, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.2, z: 0.2}
+  m_GameObject: {fileID: 1953799398355710}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23236237597667644
+--- !u!23 &23637922924452834
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836555856842984}
+  m_GameObject: {fileID: 1953799398355710}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 113487937581c35409116c922659768e, type: 2}
+  - {fileID: 2100000, guid: 158a4d3383b08ab419a78ada8d7225c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,36 +78,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33538295312521020
+--- !u!33 &33978121894211612
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836555856842984}
+  m_GameObject: {fileID: 1953799398355710}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114748543934881190
+--- !u!114 &114796871963293996
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836555856842984}
+  m_GameObject: {fileID: 1953799398355710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58cbc3d2ef03a04888372fa5df62830, type: 3}
+  m_Script: {fileID: 11500000, guid: 402d60b3a5dac4d449be148a815b4813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
-  waSFX: {fileID: 8300000, guid: 37d7f20570945f741bc27c231ef9364f, type: 3}
-  kaSFX: {fileID: 8300000, guid: e9da1e282b39bb246848c420a99fb0f6, type: 3}
---- !u!135 &135363928425542574
+  audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
+  initialState: {fileID: 11400000, guid: dc172319bdc77bb4388cab65a55acb80, type: 2}
+  defaultMaterial: {fileID: 0}
+  defaultColour: {r: 0, g: 0, b: 0, a: 0}
+--- !u!135 &135521451514095666
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1836555856842984}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_GameObject: {fileID: 1953799398355710}
+  m_Material: {fileID: 13400000, guid: cd558d0cbadfbaf4596d553660539fee, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}

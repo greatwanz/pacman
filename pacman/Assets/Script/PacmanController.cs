@@ -17,13 +17,13 @@ public class PacmanController : MonoBehaviour
     [AssertNotNull]public Text scoreText;
     [AssertNotNull]public AudioSource controllerAudioSource;
     [NonSerialized]public CharacterController controller;
-    [NonSerialized]public int sfxPlayCount;
+    [AssertNotNull]public SphereCollider sphereCollider;
     public float thrust;
     public int lives;
     public LayerMask layerMask;
     public float maxDistance;
-    public SphereCollider sphereCollider;
-
+    public int freightenedLoopCount;
+    public Coroutine frightenedCoroutine;
 
     Vector3 lastDir;
 
@@ -85,6 +85,16 @@ public class PacmanController : MonoBehaviour
         }
     }
 
+    public IEnumerator PlaySiren(GhostState state)
+    {
+        while (constants.frightenedLoopCount > 0)
+        {
+            yield return new WaitForSeconds(1);
+            constants.frightenedLoopCount--;
+        }
+        AudioManager.PlayMusic(state.audioResources.sirenSFX);
+        frightenedCoroutine = null;
+    }
     //    private void OnDrawGizmosSelected()
     //    {
     //        Gizmos.color = Color.red;
