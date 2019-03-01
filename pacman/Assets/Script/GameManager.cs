@@ -2,13 +2,21 @@
 using UnityEngine;
 using System.Reflection;
 using System;
+using System.Linq;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public bool showMainMenu;
+    public PacmanController[] players;
     [AssertNotNull]public GameObject titleScreenUI;
     [AssertNotNull]public GameObject gameScreenUI;
     [AssertNotNull]public GameObject gameScreenObjects;
+    [AssertNotNull]public Transform pacdotsTransform;
+    [AssertNotNull]public Text endGameText;
+    [AssertNotNull]public AudioClip siren;
+    [AssertNotNull]public AudioClip intermission;
+    [AssertNotNull]public AudioClip death;
 
     void Awake()
     {
@@ -29,7 +37,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameLoop()
     {
-        yield return StartGame();
+        if (showMainMenu)
+            yield return StartGame();
         yield return PlayingGame();
         yield return EndGame();
     }
@@ -43,13 +52,30 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayingGame()
     {
+        AudioManager.PlayMusic(siren);
         gameScreenUI.SetActive(true);
         gameScreenObjects.SetActive(true);
-        yield return null;
+        yield return new WaitUntil(() => pacdotsTransform.childCount == 0 || players.Any(p => p.lives == 0));
     }
 
     IEnumerator EndGame()
     {
+        foreach (PacmanController p in players)
+        {
+            p.controllerAudioSource.Stop();
+            Destroy(p);
+        }
+
+        AudioManager.musicSource.Stop();
+        if (pacdotsTransform.childCount == 0)
+        {
+            yield return new WaitForSeconds(2f);
+            AudioManager.PlaySFX(intermission);
+        }
+        else
+        {
+            AudioManager.PlaySFX(death);
+        }
         yield return null;
     }
         

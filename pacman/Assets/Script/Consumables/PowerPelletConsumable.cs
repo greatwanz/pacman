@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PacdotConsumable : Consumable
+public class PowerPelletConsumable : Consumable
 {
-    public AudioClip wakaSFX;
+    public AudioClip powerPelletSFX;
 
     protected override void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.name == "Pacman")
         {
             PacmanController p = col.GetComponent<PacmanController>();
-            p.Score += constants.pacdotScoreValue;
-            p.controllerAudioSource.PlayOneShot(wakaSFX);
+            p.Score += constants.powerPelletScoreValue;
+            p.StartCoroutine(AudioManager.PlayLoopedSFX(powerPelletSFX, 10));
             Destroy(gameObject);
         }
     }
+
 }

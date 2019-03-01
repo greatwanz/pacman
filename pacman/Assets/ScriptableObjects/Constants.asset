@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad9667a74a42814b927b6e8c82aef03, type: 3}
   m_Name: Constants
   m_EditorClassIdentifier: 
-  pacdotScoreValue: 100
+  pacdotScoreValue: 10
+  powerPelletScoreValue: 50
+  startingLives: 4

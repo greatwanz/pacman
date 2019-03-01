@@ -6,4 +6,6 @@ using UnityEngine;
 public class Constants : ScriptableObject
 {
     public int pacdotScoreValue;
+    public int powerPelletScoreValue;
+    public int startingLives;
 }
