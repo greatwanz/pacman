@@ -12,4 +12,5 @@ public class Constants : ScriptableObject
     public int frightenedLoopCount;
     public Vector3 ghostRespawnPosition;
     public Vector3 pacmanRespawnPosition;
+    public float powerPelletFlashRate;
 }

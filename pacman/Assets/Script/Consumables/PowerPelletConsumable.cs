@@ -6,6 +6,14 @@ public class PowerPelletConsumable : Consumable
 {
     public GhostState frightenedState;
 
+    MeshRenderer meshRenderer;
+
+    void Start()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+        StartCoroutine(FlashPowerPellet());
+    }
+
     protected override void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.name == "Pacman")
@@ -28,6 +36,16 @@ public class PowerPelletConsumable : Consumable
         }
     }
 
-
-
+    IEnumerator FlashPowerPellet()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(constants.powerPelletFlashRate);
+            yield return new WaitUntil(() => GameManager.controlState == GameManager.CONTROL_STATE.ACTIVE);
+            meshRenderer.enabled = false;
+            yield return new WaitForSeconds(constants.powerPelletFlashRate);
+            yield return new WaitUntil(() => GameManager.controlState == GameManager.CONTROL_STATE.ACTIVE);
+            meshRenderer.enabled = true;
+        }
+    }
 }

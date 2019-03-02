@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 23637922924452834}
   - component: {fileID: 135521451514095666}
   - component: {fileID: 114796871963293996}
-  - component: {fileID: 114267608288126684}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -86,20 +85,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953799398355710}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114267608288126684
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1953799398355710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b1179d11de503468f953c129dbd836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
-  eatGhostSFX: {fileID: 8300000, guid: 5f49a7cd1bb61ea46af8057617c35138, type: 3}
-  pacmanDiesSFX: {fileID: 8300000, guid: 258fed3042da8644ebbe40876499bd4e, type: 3}
 --- !u!114 &114796871963293996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,9 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402d60b3a5dac4d449be148a815b4813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constants: {fileID: 0}
   currentState: {fileID: 0}
   audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
   initialState: {fileID: 11400000, guid: dc172319bdc77bb4388cab65a55acb80, type: 2}
+  eatGhostSFX: {fileID: 8300000, guid: 5f49a7cd1bb61ea46af8057617c35138, type: 3}
+  pacmanDiesSFX: {fileID: 8300000, guid: 258fed3042da8644ebbe40876499bd4e, type: 3}
   defaultColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!135 &135521451514095666
 SphereCollider:

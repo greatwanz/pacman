@@ -18,3 +18,4 @@ MonoBehaviour:
   frightenedLoopCount: 0
   ghostRespawnPosition: {x: -0.1, y: 0, z: -1.6}
   pacmanRespawnPosition: {x: -0.1, y: 0, z: -9.8}
+  powerPelletFlashRate: 0.2

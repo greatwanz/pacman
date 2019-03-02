@@ -7,8 +7,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public enum CONTROL_STATE
+    {
+        ACTIVE,
+        INACTIVE
+    }
+
     [NonSerialized]public static PacmanController[] players;
     [NonSerialized]public static Ghost[] ghosts;
+    public static CONTROL_STATE controlState;
 
     public bool showMainMenu;
     [AssertNotNull]public Transform playersTransform;

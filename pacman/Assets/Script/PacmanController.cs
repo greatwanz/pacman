@@ -11,12 +11,6 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PacmanController : MonoBehaviour
 {
-    public enum CONTROL_STATE
-    {
-        NON_MOVABLE,
-        MOVABLE
-    }
-
     //[ReadOnlyAttribute]public GameObject currentHitObject;
     [AssertNotNull]public AudioResources audioResources;
     [AssertNotNull]public Constants constants;
@@ -32,7 +26,6 @@ public class PacmanController : MonoBehaviour
     public LayerMask layerMask;
     public Coroutine frightenedCoroutine;
     public Vector3 lastDir;
-    public CONTROL_STATE controlState;
 
     public int Score
     {
@@ -54,12 +47,12 @@ public class PacmanController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         lives = constants.startingLives;
-        controlState = CONTROL_STATE.MOVABLE;
+        GameManager.controlState = GameManager.CONTROL_STATE.ACTIVE;
     }
 
     void FixedUpdate()
     {
-        if (controlState == CONTROL_STATE.NON_MOVABLE)
+        if (GameManager.controlState == GameManager.CONTROL_STATE.INACTIVE)
             return;
         
         SetDirection();
@@ -111,13 +104,13 @@ public class PacmanController : MonoBehaviour
     {
         transform.localPosition = constants.pacmanRespawnPosition;
         yield return new WaitForSeconds(1);
-        controlState = CONTROL_STATE.MOVABLE;
+        GameManager.controlState = GameManager.CONTROL_STATE.ACTIVE;
         AudioManager.PlayMusic(audioResources.sirenSFX);
     }
 
     public IEnumerator PacmanDies(AudioClip audioClip)
     {
-        controlState = CONTROL_STATE.NON_MOVABLE;
+        GameManager.controlState = GameManager.CONTROL_STATE.INACTIVE;
         lives--;
         lastDir = Vector3.zero;
         AudioManager.musicSource.Stop();
@@ -128,9 +121,9 @@ public class PacmanController : MonoBehaviour
         yield return Spawn();
     }
 
-    public IEnumerator ConsumeGhost(AudioClip audioClip)
+    public IEnumerator ConsumeGhost(Ghost g, AudioClip audioClip)
     {
-        transform.localPosition = constants.ghostRespawnPosition;
+        g.transform.localPosition = constants.ghostRespawnPosition;
         AudioManager.musicSource.Pause();
         AudioManager.PlaySFX(audioClip);
         Vector3 l = lastDir;
