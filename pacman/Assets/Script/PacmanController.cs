@@ -11,21 +11,28 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PacmanController : MonoBehaviour
 {
-    [ReadOnlyAttribute]public GameObject currentHitObject;
-    [ReadOnlyAttribute]public AudioClip currentSFX;
+    public enum CONTROL_STATE
+    {
+        NON_MOVABLE,
+        MOVABLE
+    }
+
+    //[ReadOnlyAttribute]public GameObject currentHitObject;
+    [AssertNotNull]public AudioResources audioResources;
     [AssertNotNull]public Constants constants;
     [AssertNotNull]public Text scoreText;
     [AssertNotNull]public AudioSource controllerAudioSource;
-    [NonSerialized]public CharacterController controller;
     [AssertNotNull]public SphereCollider sphereCollider;
-    public float thrust;
-    public int lives;
-    public LayerMask layerMask;
-    public float maxDistance;
-    public int freightenedLoopCount;
-    public Coroutine frightenedCoroutine;
+    [NonSerialized]public CharacterController controller;
 
-    Vector3 lastDir;
+    public float thrust;
+    public float maxDistance;
+    public int lives;
+    public int freightenedLoopCount;
+    public LayerMask layerMask;
+    public Coroutine frightenedCoroutine;
+    public Vector3 lastDir;
+    public CONTROL_STATE controlState;
 
     public int Score
     {
@@ -41,16 +48,20 @@ public class PacmanController : MonoBehaviour
     }
 
     int score_backing;
-    float currentHitDistance;
+    // float currentHitDistance;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         lives = constants.startingLives;
+        controlState = CONTROL_STATE.MOVABLE;
     }
 
     void FixedUpdate()
     {
+        if (controlState == CONTROL_STATE.NON_MOVABLE)
+            return;
+        
         SetDirection();
         if (lastDir != Vector3.zero && !Collision(lastDir))
             controller.SimpleMove(lastDir * thrust);
@@ -73,14 +84,14 @@ public class PacmanController : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, sphereCollider.radius, dir, out hit, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal))
         {
-            currentHitObject = hit.transform.gameObject;
-            currentHitDistance = hit.distance;
+            //currentHitObject = hit.transform.gameObject;
+            // currentHitDistance = hit.distance;
             return true;
         }
         else
         {
-            currentHitDistance = maxDistance;
-            currentHitObject = null;
+            // currentHitDistance = maxDistance;
+            //  currentHitObject = null;
             return false;
         }
     }
@@ -94,6 +105,39 @@ public class PacmanController : MonoBehaviour
         }
         AudioManager.PlayMusic(state.audioResources.sirenSFX);
         frightenedCoroutine = null;
+    }
+
+    public IEnumerator Spawn()
+    {
+        transform.localPosition = constants.pacmanRespawnPosition;
+        yield return new WaitForSeconds(1);
+        controlState = CONTROL_STATE.MOVABLE;
+        AudioManager.PlayMusic(audioResources.sirenSFX);
+    }
+
+    public IEnumerator PacmanDies(AudioClip audioClip)
+    {
+        controlState = CONTROL_STATE.NON_MOVABLE;
+        lives--;
+        lastDir = Vector3.zero;
+        AudioManager.musicSource.Stop();
+        yield return new WaitForSeconds(1);
+        AudioManager.PlaySFX(audioClip);
+        yield return new WaitForSeconds(audioClip.length);
+        yield return new WaitForSeconds(1);
+        yield return Spawn();
+    }
+
+    public IEnumerator ConsumeGhost(AudioClip audioClip)
+    {
+        transform.localPosition = constants.ghostRespawnPosition;
+        AudioManager.musicSource.Pause();
+        AudioManager.PlaySFX(audioClip);
+        Vector3 l = lastDir;
+        lastDir = Vector3.zero;
+        yield return new WaitForSeconds(audioClip.length);
+        AudioManager.musicSource.UnPause();
+        lastDir = l;
     }
     //    private void OnDrawGizmosSelected()
     //    {

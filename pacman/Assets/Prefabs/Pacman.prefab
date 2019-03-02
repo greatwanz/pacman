@@ -193,18 +193,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e005039901d2a459284a3e50ae0c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHitObject: {fileID: 0}
+  audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
   scoreText: {fileID: 0}
   controllerAudioSource: {fileID: 82737428241315364}
-  currentSFX: {fileID: 0}
+  sphereCollider: {fileID: 135084473468672626}
   thrust: 2
+  maxDistance: 0.1
   lives: 0
+  freightenedLoopCount: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 512
-  maxDistance: 0.1
-  currentHitObject: {fileID: 0}
-  sphereCollider: {fileID: 135084473468672626}
+  lastDir: {x: 0, y: 0, z: 0}
 --- !u!135 &135084473468672626
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -2,16 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Ghost))]
 public class GhostConsumable : Consumable
 {
-    public AudioClip eatGhostSFX;
+    [AssertNotNull]public AudioClip eatGhostSFX;
+    [AssertNotNull]public AudioClip pacmanDiesSFX;
+
+    Ghost ghost;
+
+    void Start()
+    {
+        ghost = GetComponent<Ghost>();
+    }
 
     protected override void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.name == "Pacman")
         {
-            AudioManager.PlaySFX(eatGhostSFX);
-            Destroy(gameObject);
+            PacmanController p = col.GetComponent<PacmanController>();
+
+            if (ghost.currentState.GetType() == typeof(GhostFrightenedState))
+                p.StartCoroutine(p.ConsumeGhost(eatGhostSFX));
+            else
+                p.StartCoroutine(p.PacmanDies(pacmanDiesSFX));
         }
     }
 }

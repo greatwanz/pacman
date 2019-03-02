@@ -10,4 +10,6 @@ public class Constants : ScriptableObject
     public int startingLives;
     public Color freightenedColour;
     public int frightenedLoopCount;
+    public Vector3 ghostRespawnPosition;
+    public Vector3 pacmanRespawnPosition;
 }

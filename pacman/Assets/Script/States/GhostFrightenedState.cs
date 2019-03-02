@@ -6,12 +6,10 @@ using UnityEngine;
 public class GhostFrightenedState : GhostState
 {
     public GhostState ghostChaseState;
-    float time;
 
     public override void Init(Ghost g)
     {
         g.meshRenderer.material.color = constants.freightenedColour;
-        time = Time.time;
     }
 
     public override void Execute(Ghost g)

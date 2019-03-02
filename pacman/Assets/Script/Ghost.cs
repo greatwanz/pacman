@@ -6,6 +6,7 @@ using System;
 [RequireComponent(typeof(MeshRenderer))]
 public class Ghost : MonoBehaviour
 {
+    [ReadOnlyAttribute]public GhostState currentState;
     [AssertNotNull]public AudioResources audioResources;
     [AssertNotNull]public GhostState initialState;
     public Color defaultColour;
@@ -13,7 +14,6 @@ public class Ghost : MonoBehaviour
 
     [NonSerialized]public MeshRenderer meshRenderer;
 
-    GhostState currentState;
 
     void Awake()
     {

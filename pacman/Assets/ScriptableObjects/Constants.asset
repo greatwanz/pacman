@@ -16,3 +16,5 @@ MonoBehaviour:
   startingLives: 4
   freightenedColour: {r: 0, g: 0, b: 1, a: 0}
   frightenedLoopCount: 0
+  ghostRespawnPosition: {x: -0.1, y: 0, z: -1.6}
+  pacmanRespawnPosition: {x: -0.1, y: 0, z: -9.8}
