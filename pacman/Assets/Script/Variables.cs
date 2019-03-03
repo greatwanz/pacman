@@ -14,5 +14,7 @@ namespace pacman
         public int frightenedLoopCount;
         //Current state of the ghosts
         public GhostState currentGhostState;
+        //Move speed of pacman
+        public float pacmanSpeed;
     }
 }

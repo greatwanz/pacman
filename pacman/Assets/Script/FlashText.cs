@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace pacman
 {
@@ -21,6 +22,14 @@ namespace pacman
             text = GetComponent<Text>();
             initString = text.text;
             StartCoroutine(Flash());
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("GameScene");
+            }
         }
 
         /// <summary>

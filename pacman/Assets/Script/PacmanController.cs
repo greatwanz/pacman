@@ -38,8 +38,6 @@ namespace pacman
         //Character controller to control pacman
         [NonSerialized]public CharacterController controller;
 
-        //Move speed of pacman
-        public float thrust;
         //Distance to detect collisions
         public float collisionDistance;
         //Layermask of collision objects
@@ -76,16 +74,11 @@ namespace pacman
             {
                 Instantiate(lifeIndicator, livesTransform);
             }
-            AudioManager.PlaySFX(audioResources.introMusic);
-            notificationText.gameObject.SetActive(true);
-            notificationText.text = "Ready!";
-            notificationText.color = Color.yellow;
-            yield return new WaitForSeconds(audioResources.introMusic.length);
-            //Spaawn pacman without waiting
+
+            //Wait until pacman becomes controllable
+            yield return new WaitUntil(() => variables.pacmanControlState);
+            //Spawn pacman without waiting
             yield return Spawn(0);
-            AudioManager.PlayMusic(audioResources.sirenMusic);
-            //enable controls
-            variables.pacmanControlState = true;
         }
 
         void FixedUpdate()
@@ -98,7 +91,7 @@ namespace pacman
             //Move in the last specified direction if one is specified and it doesn't cause a collision
             if (lastDir != Vector3.zero && !Collision(lastDir, collisionDistance))
             {
-                controller.SimpleMove(lastDir * thrust);
+                controller.SimpleMove(lastDir * variables.pacmanSpeed);
             }
         }
 

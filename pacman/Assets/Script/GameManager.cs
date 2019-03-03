@@ -16,17 +16,15 @@ namespace pacman
         [NonSerialized]public static PacmanController[] players;
         [NonSerialized]public static Ghost[] ghosts;
 
-        public bool showMainMenu;
         [AssertNotNull]public Transform playersTransform;
         [AssertNotNull]public Transform ghostsTransform;
-        [AssertNotNull]public GameObject titleScreenUI;
-        [AssertNotNull]public GameObject gameScreenUI;
         [AssertNotNull]public GameObject gameScreenObjects;
         [AssertNotNull]public Transform pacdotsTransform;
         [AssertNotNull]public Transform powerPelletsTransform;
         [AssertNotNull]public Text notificationText;
         [AssertNotNull]public AudioResources audioResources;
         [AssertNotNull]public Constants constants;
+        [AssertNotNull]public Variables variables;
 
 
         void Awake()
@@ -36,9 +34,6 @@ namespace pacman
                 AttributeAssert(AssertFieldNotNull);
             }
 
-            titleScreenUI.SetActive(showMainMenu);
-            gameScreenUI.SetActive(!showMainMenu);
-            gameScreenObjects.SetActive(!showMainMenu);
             players = playersTransform.GetComponentsInChildren<PacmanController>(true);
             ghosts = ghostsTransform.GetComponentsInChildren<Ghost>(true);
         }
@@ -50,23 +45,27 @@ namespace pacman
 
         IEnumerator GameLoop()
         {
-            if (showMainMenu)
-                yield return StartGame();
+            yield return StartGame();
             yield return PlayingGame();
             yield return EndGame();
         }
 
         IEnumerator StartGame()
         {
+            notificationText.gameObject.SetActive(true);
+            notificationText.text = "Ready!";
+            notificationText.color = Color.yellow;
             //Wait until space is pressed
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-            titleScreenUI.SetActive(false);
+            AudioManager.PlaySFX(audioResources.introMusic);
+            yield return new WaitForSeconds(audioResources.introMusic.length);
+            notificationText.gameObject.SetActive(false);
+            AudioManager.PlayMusic(audioResources.sirenMusic);
+            //enable controls
+            variables.pacmanControlState = true;
         }
 
         IEnumerator PlayingGame()
         {
-            gameScreenUI.SetActive(true);
-            gameScreenObjects.SetActive(true);
             yield return new WaitUntil(() => pacdotsTransform.childCount == 0 || players.Any(p => p.lives < 0));
         }
 
