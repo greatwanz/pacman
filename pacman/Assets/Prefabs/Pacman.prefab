@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756868687605738}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.17, y: -11.215, z: -2.94}
+  m_LocalPosition: {x: -0.100000024, y: 0, z: -9.8}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
@@ -194,19 +194,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHitObject: {fileID: 0}
+  lastDir: {x: 0, y: 0, z: 0}
+  lives: 0
   audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
+  variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
+  notificationText: {fileID: 0}
   scoreText: {fileID: 0}
-  controllerAudioSource: {fileID: 82737428241315364}
   sphereCollider: {fileID: 135084473468672626}
-  thrust: 2
-  maxDistance: 0.1
-  lives: 0
-  freightenedLoopCount: 0
+  lifeIndicator: {fileID: 114060199737128786, guid: ea1f562e120c456468df4f2c639b4da3,
+    type: 2}
+  livesTransform: {fileID: 0}
+  thrust: 3
+  collisionDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 512
-  lastDir: {x: 0, y: 0, z: 0}
+  isKa: 0
 --- !u!135 &135084473468672626
 SphereCollider:
   m_ObjectHideFlags: 1

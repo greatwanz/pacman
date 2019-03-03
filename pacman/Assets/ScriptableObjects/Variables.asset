@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc2d3e0267695e4396b77083153e7dc, type: 3}
+  m_Name: Variables
+  m_EditorClassIdentifier: 
+  pacmanControlState: 0
+  frightenedLoopCount: 0
+  currentGhostState: {fileID: 0}

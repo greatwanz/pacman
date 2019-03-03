@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3641f7c0c3fac4c88dd7ba3bef4114, type: 3}
   m_Name: AudioResources
   m_EditorClassIdentifier: 
-  sirenSFX: {fileID: 8300000, guid: e082f5ed17407bd4b983f0da5587a1ef, type: 3}
-  introMusic: {fileID: 8300000, guid: 810371de96bb0e44ebf3aa7fafbadceb, type: 3}
+  sirenMusic: {fileID: 8300000, guid: e082f5ed17407bd4b983f0da5587a1ef, type: 3}
+  introMusic: {fileID: 8300000, guid: 4fcaacc4a4b54024ea2a2dcd5cf73feb, type: 3}
   intermissionMusic: {fileID: 8300000, guid: e1f46018a7a46c84f882f1205eaacd29, type: 3}
-  powerPelletSFX: {fileID: 8300000, guid: ea5690a7a6bde034eb1152fedfac64c5, type: 3}

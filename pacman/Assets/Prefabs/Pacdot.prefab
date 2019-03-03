@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
+  variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
   waSFX: {fileID: 8300000, guid: 37d7f20570945f741bc27c231ef9364f, type: 3}
   kaSFX: {fileID: 8300000, guid: e9da1e282b39bb246848c420a99fb0f6, type: 3}
 --- !u!135 &135363928425542574

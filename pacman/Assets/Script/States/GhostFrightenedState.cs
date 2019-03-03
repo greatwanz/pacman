@@ -1,22 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "GhostState/Ghost Frightened State")]
-public class GhostFrightenedState : GhostState
+namespace pacman
 {
-    public GhostState ghostChaseState;
-
-    public override void Init(Ghost g)
+    /// <summary>
+    /// Ghost runs away from Pacman, while turning randomly.
+    /// </summary>
+    [CreateAssetMenu(menuName = "GhostState/Ghost Frightened State")]
+    public class GhostFrightenedState : GhostState
     {
-        g.meshRenderer.material.color = constants.freightenedColour;
-    }
+        //GhostState to switch to after frightened state expires
+        public GhostState ghostChaseState;
+        //Colour ghosts turn into when frightened
+        public Color frightenedColour;
 
-    public override void Execute(Ghost g)
-    {
-        if (constants.frightenedLoopCount == 0)
+        public override void Init(Ghost g)
         {
-            g.SetState(ghostChaseState);
+            g.meshRenderer.material.color = frightenedColour;
+        }
+
+        public override void Execute(Ghost g)
+        {
+
         }
     }
 }

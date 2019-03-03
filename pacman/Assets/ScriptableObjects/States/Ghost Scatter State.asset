@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Name: Ghost Scatter State
   m_EditorClassIdentifier: 
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
+  variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
   audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}

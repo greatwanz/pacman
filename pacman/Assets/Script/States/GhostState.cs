@@ -1,13 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class GhostState : ScriptableObject
+namespace pacman
 {
-    public Constants constants;
-    public AudioResources audioResources;
+    /// <summary>
+    /// Ghost's current state
+    /// </summary>
+    public abstract class GhostState : ScriptableObject
+    {
+        //Global constants
+        public Constants constants;
+        //Global variables
+        public Variables variables;
+        //Global audio resources
+        public AudioResources audioResources;
 
-    public abstract void Init(Ghost g);
+        /// <summary>
+        /// Initialises a ghost state. Executes when state is switched to.
+        /// </summary>
+        /// <param name="g">The ghost the state is currently applied on</param>
+        public abstract void Init(Ghost g);
 
-    public abstract void Execute(Ghost g);
+        /// <summary>
+        /// Execute the specified ghost state. Continues executing until ghost's state is switched.
+        /// </summary>
+        /// <param name="g">The ghost the state is currently applied on</param>
+        public abstract void Execute(Ghost g);
+    }
 }

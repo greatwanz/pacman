@@ -1,26 +1,36 @@
 ﻿using UnityEngine;
 
-public class PacdotConsumable : Consumable
+namespace pacman
 {
-    public static int wakaIndex;
-
-    public AudioClip waSFX;
-    public AudioClip kaSFX;
-
-    protected override void OnTriggerEnter(Collider col)
+    /// <summary>
+    /// A consumable pacdot
+    /// </summary>
+    public class PacdotConsumable : Consumable
     {
-        if (col.gameObject.name == "Pacman")
+        //'Wa' sfx
+        [AssertNotNull]public AudioClip waSFX;
+        //'Ka' sfx
+        [AssertNotNull]public AudioClip kaSFX;
+
+        protected override void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
-            p.Score += constants.pacdotScoreValue;
 
-            if (wakaIndex % 2 == 0)
-                p.controllerAudioSource.PlayOneShot(waSFX);
-            else
-                p.controllerAudioSource.PlayOneShot(kaSFX);
-            
-            wakaIndex++;
-            Destroy(gameObject);
+            if (p != null)
+            {
+                //increment score
+                p.Score += constants.pacdotScoreValue;
+
+                //Choose clip to play
+                AudioClip sfxClip;
+                sfxClip = !p.isKa ? waSFX : kaSFX;
+                AudioManager.PlaySFX(sfxClip);
+
+                //To next sfx
+                p.isKa = !p.isKa;
+                Destroy(gameObject);
+            }
         }
     }
+
 }

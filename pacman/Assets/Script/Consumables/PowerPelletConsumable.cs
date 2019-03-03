@@ -1,51 +1,93 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerPelletConsumable : Consumable
+namespace pacman
 {
-    public GhostState frightenedState;
-
-    MeshRenderer meshRenderer;
-
-    void Start()
+    /// <summary>
+    /// A consumable power pellet
+    /// </summary>
+    [RequireComponent(typeof(MeshRenderer))]
+    public class PowerPelletConsumable : Consumable
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        StartCoroutine(FlashPowerPellet());
-    }
+        //Frightened state of ghosts
+        [AssertNotNull]public GhostState frightenedState;
+        //Scatter state of ghosts
+        [AssertNotNull]public GhostState scatterState;
+        [AssertNotNull]public AudioClip frightenedMusic;
 
-    protected override void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.name == "Pacman")
+        //MeshRenderer of the power pellet
+        MeshRenderer meshRenderer;
+
+        void Start()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            StartCoroutine(FlashPowerPellet());
+        }
+
+        protected override void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
-            p.Score += constants.powerPelletScoreValue;
-
-            constants.frightenedLoopCount = 5;
-            if (p.frightenedCoroutine == null)
+            if (p != null)
             {
-                AudioManager.PlayMusic(frightenedState.audioResources.powerPelletSFX);
-                p.frightenedCoroutine = p.StartCoroutine(p.PlaySiren(frightenedState));
-            }
+                p.Score += constants.powerPelletScoreValue;
 
+                //Set ghosts to frightened state
+                foreach (Ghost g in GameManager.ghosts)
+                {
+                    g.SetState(frightenedState);
+                }
+
+                //Set frightenedLoopCount to its initial value
+                variables.frightenedLoopCount = constants.initFrightenedLoopCount;
+
+                //If frightened music is not currently being played, play it, and start coroutine to
+                //schedule switching back to siren music
+                if (Ghost.unfrightenCoroutine == null)
+                {
+                    AudioManager.PlayMusic(frightenedMusic);
+                    Ghost.unfrightenCoroutine = p.StartCoroutine(Unfrighten(scatterState));
+                }
+
+                Destroy(gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Flashes the power pellet.
+        /// </summary>
+        IEnumerator FlashPowerPellet()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(constants.powerPelletFlashRate);
+                //Wait until user has control before flashing power pellet
+                yield return new WaitUntil(() => variables.pacmanControlState);
+                meshRenderer.enabled = false;
+                yield return new WaitForSeconds(constants.powerPelletFlashRate);
+                yield return new WaitUntil(() => variables.pacmanControlState);
+                meshRenderer.enabled = true;
+            }
+        }
+
+
+        /// <summary>
+        /// Unfrighten ghosts
+        /// </summary>
+        /// <param name="state">State to return to</param>
+        public IEnumerator Unfrighten(GhostState state)
+        {
+            while (variables.frightenedLoopCount > 0)
+            {
+                yield return new WaitForSeconds(constants.shortDelay);
+                variables.frightenedLoopCount--;
+            }
+            AudioManager.PlayMusic(state.audioResources.sirenMusic);
+            //Set ghosts to scatter state
             foreach (Ghost g in GameManager.ghosts)
             {
-                g.SetState(frightenedState);
+                g.SetState(state);
             }
-            Destroy(gameObject);
-        }
-    }
-
-    IEnumerator FlashPowerPellet()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(constants.powerPelletFlashRate);
-            yield return new WaitUntil(() => GameManager.controlState == GameManager.CONTROL_STATE.ACTIVE);
-            meshRenderer.enabled = false;
-            yield return new WaitForSeconds(constants.powerPelletFlashRate);
-            yield return new WaitUntil(() => GameManager.controlState == GameManager.CONTROL_STATE.ACTIVE);
-            meshRenderer.enabled = true;
+            Ghost.unfrightenCoroutine = null;
         }
     }
 }

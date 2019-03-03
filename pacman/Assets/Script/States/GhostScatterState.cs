@@ -1,16 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "GhostState/Ghost Scatter State")]
-public class GhostScatterState : GhostState
+namespace pacman
 {
-    public override void Init(Ghost g)
+    /// <summary>
+    /// Ghost scatter state. Ghosts scatter to the corners.
+    /// </summary>
+    [CreateAssetMenu(menuName = "GhostState/Ghost Scatter State")]
+    public class GhostScatterState : GhostState
     {
-        g.meshRenderer.material.color = g.defaultColour;
-    }
+        public override void Init(Ghost g)
+        {
+            g.meshRenderer.material.color = g.defaultColour;
+        }
 
-    public override void Execute(Ghost g)
-    {
+        public override void Execute(Ghost g)
+        {
+        }
     }
 }

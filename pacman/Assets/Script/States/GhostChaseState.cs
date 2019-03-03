@@ -1,16 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "GhostState/Ghost Chase State")]
-public class GhostChaseState : GhostState
+namespace pacman
 {
-    public override void Init(Ghost g)
+    /// <summary>
+    /// Ghost chase state. Ghost chases Pacman.
+    /// </summary>
+    [CreateAssetMenu(menuName = "GhostState/Ghost Chase State")]
+    public class GhostChaseState : GhostState
     {
-        g.meshRenderer.material.color = g.defaultColour;
-    }
+        public override void Init(Ghost g)
+        {
+            Debug.Log("test");
+            g.meshRenderer.material.color = g.defaultColour;
+        }
 
-    public override void Execute(Ghost g)
-    {
+        public override void Execute(Ghost g)
+        {
+        }
     }
 }
