@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 23161187348512600}
   - component: {fileID: 135084473468672626}
   - component: {fileID: 114160481527394344}
-  - component: {fileID: 143071773280869314}
   - component: {fileID: 82737428241315364}
+  - component: {fileID: 54062656576233810}
   m_Layer: 0
   m_Name: Pacman
   m_TagString: Untagged
@@ -87,6 +87,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756868687605738}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54062656576233810
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756868687605738}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!82 &82737428241315364
 AudioSource:
   m_ObjectHideFlags: 1
@@ -205,11 +220,10 @@ MonoBehaviour:
   lifeIndicator: {fileID: 114060199737128786, guid: ea1f562e120c456468df4f2c639b4da3,
     type: 2}
   livesTransform: {fileID: 0}
-  thrust: 3
   collisionDistance: 0.1
   layerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   isKa: 0
 --- !u!135 &135084473468672626
 SphereCollider:
@@ -222,21 +236,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &143071773280869314
-CharacterController:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1756868687605738}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}

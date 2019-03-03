@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc2d3e0267695e4396b77083153e7dc, type: 3}
   m_Name: Variables
   m_EditorClassIdentifier: 
-  pacmanControlState: 0
+  pacmanControlState: 1
   frightenedLoopCount: 0
-  currentGhostState: {fileID: 0}
+  currentGhostState: {fileID: 11400000, guid: dc172319bdc77bb4388cab65a55acb80, type: 2}
+  pacmanSpeed: 3
