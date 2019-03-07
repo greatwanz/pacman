@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953799398355710}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 4.7}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,10 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
   variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
-  initialState: {fileID: 11400000, guid: dc172319bdc77bb4388cab65a55acb80, type: 2}
-  eatGhostSFX: {fileID: 8300000, guid: 5f49a7cd1bb61ea46af8057617c35138, type: 3}
-  pacmanDiesSFX: {fileID: 8300000, guid: 258fed3042da8644ebbe40876499bd4e, type: 3}
-  defaultColour: {r: 0, g: 0, b: 0, a: 0}
+  currentGhostState: {fileID: 0}
+  targetIndex: 0
 --- !u!135 &135521451514095666
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -109,7 +107,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953799398355710}
   m_Material: {fileID: 13400000, guid: cd558d0cbadfbaf4596d553660539fee, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4

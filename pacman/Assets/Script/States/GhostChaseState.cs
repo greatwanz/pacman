@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
+using System.Linq;
 
 namespace pacman
 {
@@ -8,14 +11,17 @@ namespace pacman
     [CreateAssetMenu(menuName = "GhostState/Ghost Chase State")]
     public class GhostChaseState : GhostState
     {
-        public override void Init(Ghost g)
+        public override void Init(GhostConsumable g)
         {
-            Debug.Log("test");
-            g.meshRenderer.material.color = g.defaultColour;
+            g.meshRenderer.material.color = g.ghost.initialColour;
         }
 
-        public override void Execute(Ghost g)
+        public override void Execute(GhostConsumable g)
         {
+            PathRequestManager.RequestPath(g.transform.position, g.target.position, g.OnPathFound);
         }
+
+
+
     }
 }

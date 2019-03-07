@@ -8,12 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f30fd3ae9809af42afafbd36c1de2a3, type: 3}
-  m_Name: Ghost Frightened State
+  m_Script: {fileID: 11500000, guid: 8252b63359270904ea6a1a28ac622ff8, type: 3}
+  m_Name: Ghost Waiting In Pen State
   m_EditorClassIdentifier: 
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
   variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
   audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
-  ghostChaseState: {fileID: 11400000, guid: 90967f6f2dcac3d4abff3478cf2022c4, type: 2}
-  frightenedColour: {r: 0, g: 0, b: 1, a: 0}
-  frightenedMusic: {fileID: 8300000, guid: ea5690a7a6bde034eb1152fedfac64c5, type: 3}

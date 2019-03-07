@@ -7,11 +7,6 @@ namespace pacman
     /// </summary>
     public class PacdotConsumable : Consumable
     {
-        //'Wa' sfx
-        [AssertNotNull]public AudioClip waSFX;
-        //'Ka' sfx
-        [AssertNotNull]public AudioClip kaSFX;
-
         protected override void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
@@ -23,7 +18,7 @@ namespace pacman
 
                 //Choose clip to play
                 AudioClip sfxClip;
-                sfxClip = !p.isKa ? waSFX : kaSFX;
+                sfxClip = !p.isKa ? p.waSFX : p.kaSFX;
                 AudioManager.PlaySFX(sfxClip);
 
                 //To next sfx

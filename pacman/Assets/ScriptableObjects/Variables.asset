@@ -13,5 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pacmanControlState: 1
   frightenedLoopCount: 0
-  currentGhostState: {fileID: 11400000, guid: dc172319bdc77bb4388cab65a55acb80, type: 2}
-  pacmanSpeed: 3
+  pacmanSpeed: 6

@@ -12,8 +12,6 @@ namespace pacman
         public bool pacmanControlState;
         //Number of loops the frightened SFX has left to play
         public int frightenedLoopCount;
-        //Current state of the ghosts
-        public GhostState currentGhostState;
         //Move speed of pacman
         public float pacmanSpeed;
     }

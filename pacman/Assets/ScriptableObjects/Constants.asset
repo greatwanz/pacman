@@ -17,5 +17,5 @@ MonoBehaviour:
   shortDelay: 1
   initFrightenedLoopCount: 5
   powerPelletFlashRate: 0.2
-  ghostRespawnPosition: {x: -0.1, y: 0, z: -1.6}
-  pacmanRespawnPosition: {x: -0.1, y: 0, z: -9.8}
+  ghostRespawnPosition: {x: 0, y: -0.5500002, z: 4.8425}
+  pacmanRespawnPosition: {x: 0, y: 0, z: -5.1}

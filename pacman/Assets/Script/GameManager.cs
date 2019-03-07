@@ -13,18 +13,13 @@ namespace pacman
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        [NonSerialized]public static PacmanController[] players;
-        [NonSerialized]public static Ghost[] ghosts;
-
-        [AssertNotNull]public Transform playersTransform;
-        [AssertNotNull]public Transform ghostsTransform;
-        [AssertNotNull]public GameObject gameScreenObjects;
         [AssertNotNull]public Transform pacdotsTransform;
-        [AssertNotNull]public Transform powerPelletsTransform;
         [AssertNotNull]public Text notificationText;
         [AssertNotNull]public AudioResources audioResources;
         [AssertNotNull]public Constants constants;
         [AssertNotNull]public Variables variables;
+
+        PacmanController pacmanController;
 
 
         void Awake()
@@ -33,13 +28,12 @@ namespace pacman
             {
                 AttributeAssert(AssertFieldNotNull);
             }
-
-            players = playersTransform.GetComponentsInChildren<PacmanController>(true);
-            ghosts = ghostsTransform.GetComponentsInChildren<Ghost>(true);
+            variables.pacmanControlState = false;
         }
 
         void Start()
         {
+            pacmanController = FindObjectOfType<PacmanController>();
             StartCoroutine(GameLoop());	
         }
 
@@ -66,20 +60,13 @@ namespace pacman
 
         IEnumerator PlayingGame()
         {
-            yield return new WaitUntil(() => pacdotsTransform.childCount == 0 || players.Any(p => p.lives < 0));
+            yield return new WaitUntil(() => pacdotsTransform.childCount == 0 || pacmanController.lives < 0);
         }
 
         IEnumerator EndGame()
         {
-            foreach (PacmanController p in players)
-            {
-                Destroy(p);
-            }
-            PowerPelletConsumable[] pellets = powerPelletsTransform.GetComponentsInChildren<PowerPelletConsumable>();
-            foreach (PowerPelletConsumable p in pellets)
-            {
-                p.StopAllCoroutines();
-            }
+            variables.pacmanControlState = false;
+            Destroy(pacmanController);
 
             AudioManager.musicSource.Stop();
             if (pacdotsTransform.childCount == 0)

@@ -208,23 +208,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e005039901d2a459284a3e50ae0c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHitObject: {fileID: 0}
-  lastDir: {x: 0, y: 0, z: 0}
+  currentTargetObject: {fileID: 0}
+  currentDir: {x: 0, y: 0, z: 0}
+  queuedDir: {x: 0, y: 0, z: 0}
   lives: 0
   audioResources: {fileID: 11400000, guid: c3858bec5d307a84b8fc6e197298a779, type: 2}
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
   variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
   notificationText: {fileID: 0}
   scoreText: {fileID: 0}
-  sphereCollider: {fileID: 135084473468672626}
-  lifeIndicator: {fileID: 114060199737128786, guid: ea1f562e120c456468df4f2c639b4da3,
-    type: 2}
-  livesTransform: {fileID: 0}
+  pacmanDiesSFX: {fileID: 0}
+  waSFX: {fileID: 8300000, guid: 37d7f20570945f741bc27c231ef9364f, type: 3}
+  kaSFX: {fileID: 8300000, guid: e9da1e282b39bb246848c420a99fb0f6, type: 3}
   collisionDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
   isKa: 0
+  defaultSpeed: 6
 --- !u!135 &135084473468672626
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -30,14 +30,12 @@ namespace pacman
         [AssertNotNull]public Text notificationText;
         //Score indicator
         [AssertNotNull]public Text scoreText;
-        //Sphere collider to represent pacman
-        [AssertNotNull]public SphereCollider sphereCollider;
-        //Life indicator prefab
-        [AssertNotNull]public Image lifeIndicator;
-        //Transform of life indicators
-        [AssertNotNull]public Transform livesTransform;
-
-        //Character controller to control pacman
+        //Sound effect to play when ghost kills pacman
+        [AssertNotNull]public AudioClip pacmanDiesSFX;
+        //'Wa' sfx
+        [AssertNotNull]public AudioClip waSFX;
+        //'Ka' sfx
+        [AssertNotNull]public AudioClip kaSFX;
 
         //Distance to detect collisions
         public float collisionDistance;
@@ -45,12 +43,16 @@ namespace pacman
         public LayerMask layerMask;
         //Is 'Ka' the sound effect currently played?
         public bool isKa;
+        //Default speed of pacman
+        public int defaultSpeed;
+
+        public event Action spawnEvent;
 
         //Property to update score
         public int Score
         {
             set
-            { 
+            {
                 scoreBacking = value;
                 //Update score text
                 scoreText.text = "High Score\n" + scoreBacking;
@@ -60,20 +62,14 @@ namespace pacman
                 return scoreBacking;
             }
         }
-
+        
         //backing field of score
         int scoreBacking;
 
         IEnumerator Start()
         {
-            variables.pacmanControlState = false;
-            //Instantiate lives
+            variables.pacmanSpeed = defaultSpeed;
             lives = constants.startingLives;
-            for (int i = 0; i < lives; ++i)
-            {
-                Instantiate(lifeIndicator, livesTransform);
-            }
-
             //Wait until pacman becomes controllable
             yield return new WaitUntil(() => variables.pacmanControlState);
             //Spawn pacman without waiting
@@ -82,9 +78,6 @@ namespace pacman
 
         void Update()
         {
-            //Don't allow controls if pacman isn't controllable
-            if (!variables.pacmanControlState)
-                return;
 
             //Set direction according to arrow key pressed
             if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -95,6 +88,10 @@ namespace pacman
                 SetDirection(-transform.forward);
             else if (Input.GetKeyDown(KeyCode.UpArrow))
                 SetDirection(transform.forward);
+
+            //Don't allow controls if pacman isn't controllable
+            if (!variables.pacmanControlState)
+                return;
 
             //If current direction pacman is travelling is not the queued direction, and the queued direction is valid
             //Set current direction to queued direction
@@ -119,9 +116,7 @@ namespace pacman
         {
             queuedDir = dir;
             if (CheckDirectionValidity(dir))
-            {
                 currentDir = queuedDir;
-            }
         }
 
         /// <summary>
@@ -130,10 +125,8 @@ namespace pacman
         /// <param name="waitTime">Wait a specified amount of time before spawning</param>
         public IEnumerator Spawn(float waitTime)
         {
-            currentDir = Vector3.zero;
-            queuedDir = Vector3.zero;
-            currentTargetObject = null;
-            Destroy(livesTransform.GetChild(lives - 1).gameObject);
+            if (spawnEvent != null)
+                spawnEvent();
             lives--;
             transform.localPosition = constants.pacmanRespawnPosition;
             yield return new WaitForSeconds(waitTime);
@@ -145,15 +138,17 @@ namespace pacman
         /// <summary>
         /// Pacmans dies.
         /// </summary>
-        /// <param name="audioClip">Audio clip to play when pacman dies</param>
-        public IEnumerator PacmanDies(AudioClip audioClip)
+        public IEnumerator PacmanDies()
         {
+            currentDir = Vector3.zero;
+            queuedDir = Vector3.zero;
+            currentTargetObject = null;
             variables.pacmanControlState = false;
             //clear direction
             AudioManager.musicSource.Stop();
             yield return new WaitForSeconds(constants.shortDelay);
-            AudioManager.PlaySFX(audioClip);
-            yield return new WaitForSeconds(audioClip.length);
+            AudioManager.PlaySFX(pacmanDiesSFX);
+            yield return new WaitForSeconds(pacmanDiesSFX.length);
             yield return new WaitForSeconds(constants.shortDelay);
 
             //if lives is zero, reduce life count, which causes game to end
@@ -174,7 +169,7 @@ namespace pacman
         /// </summary>
         /// <param name="g">Ghost consumed</param>
         /// <param name="audioClip">Audioclip to play on consumption</param>
-        public IEnumerator ConsumeGhost(Ghost g, AudioClip audioClip)
+        public IEnumerator ConsumeGhost(GhostConsumable g, AudioClip audioClip)
         {
             variables.pacmanControlState = false;
             g.transform.localPosition = constants.ghostRespawnPosition;

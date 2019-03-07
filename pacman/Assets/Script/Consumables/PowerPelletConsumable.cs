@@ -17,11 +17,20 @@ namespace pacman
 
         //MeshRenderer of the power pellet
         MeshRenderer meshRenderer;
+        Coroutine flashPowerPelletCoroutine;
+        GameManager gameManager;
 
         void Start()
         {
+            gameManager = FindObjectOfType<GameManager>();
             meshRenderer = GetComponent<MeshRenderer>();
-            StartCoroutine(FlashPowerPellet());
+            flashPowerPelletCoroutine = StartCoroutine(FlashPowerPellet());
+        }
+
+        void OnDestroy()
+        {
+            if (flashPowerPelletCoroutine != null)
+                StopCoroutine(flashPowerPelletCoroutine);
         }
 
         protected override void OnTriggerEnter(Collider col)
@@ -30,24 +39,9 @@ namespace pacman
             if (p != null)
             {
                 p.Score += constants.powerPelletScoreValue;
-
-                //Set ghosts to frightened state
-                foreach (Ghost g in GameManager.ghosts)
-                {
-                    g.SetState(frightenedState);
-                }
-
                 //Set frightenedLoopCount to its initial value
                 variables.frightenedLoopCount = constants.initFrightenedLoopCount;
-
-                //If frightened music is not currently being played, play it, and start coroutine to
-                //schedule switching back to siren music
-                if (Ghost.unfrightenCoroutine == null)
-                {
-                    AudioManager.PlayMusic(frightenedMusic);
-                    Ghost.unfrightenCoroutine = p.StartCoroutine(Unfrighten(scatterState));
-                }
-
+                GhostConsumable.SetState(frightenedState);
                 Destroy(gameObject);
             }
         }
@@ -68,26 +62,6 @@ namespace pacman
                 meshRenderer.enabled = true;
             }
         }
-
-
-        /// <summary>
-        /// Unfrighten ghosts
-        /// </summary>
-        /// <param name="state">State to return to</param>
-        public IEnumerator Unfrighten(GhostState state)
-        {
-            while (variables.frightenedLoopCount > 0)
-            {
-                yield return new WaitForSeconds(constants.shortDelay);
-                variables.frightenedLoopCount--;
-            }
-            AudioManager.PlayMusic(state.audioResources.sirenMusic);
-            //Set ghosts to scatter state
-            foreach (Ghost g in GameManager.ghosts)
-            {
-                g.SetState(state);
-            }
-            Ghost.unfrightenCoroutine = null;
-        }
+            
     }
 }
