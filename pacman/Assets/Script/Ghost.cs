@@ -7,16 +7,14 @@ namespace pacman
     [CreateAssetMenu(menuName = "Ghost")]
     public class Ghost : ScriptableObject
     {
-        [AssertNotNull]public GhostConsumable ghostPrefab;
-
         //Sound effect to play when ghost is eaten
         [AssertNotNull]public AudioClip eatGhostSFX;
+        [AssertNotNull]public ChaseTarget chaseTarget;
+
         public Color initialColour;
         public GhostState initialState;
         public GhostState chaseState;
         public int releaseAfterNumPacdots;
-        public Vector3 initPosition;
-        public int chaseSpeed;
-        //        public ChaseBehaviour chaseBehabiour;
+        public float chaseSpeed;
     }
 }

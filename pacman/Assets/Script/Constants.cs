@@ -21,8 +21,8 @@ namespace pacman
         //Rate power pellet flashes
         public float powerPelletFlashRate;
         //Position ghosts respawn at
-        public Vector3 ghostRespawnPosition;
+        //        public Transform ghostRespawnPosition;
         //Position pacman respawns at
-        public Vector3 pacmanRespawnPosition;
+        public Transform pacmanRespawnPosition;
     }
 }
