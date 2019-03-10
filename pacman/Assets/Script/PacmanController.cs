@@ -2,7 +2,6 @@
 using System;
 using UnityEngine.UI;
 using System.Collections;
-using System.Linq;
 
 namespace pacman
 {
@@ -38,6 +37,10 @@ namespace pacman
         public Vector3 respawnPos;
 
         public event Action spawnEvent;
+
+        public delegate void PacmanDiesEvent();
+
+        public event PacmanDiesEvent pacmanDiesEvent;
 
         //Property to update score
         public int Score
@@ -83,19 +86,13 @@ namespace pacman
         }
 
         /// <summary>
-        /// Spawn pacman
+        /// Sets direction to move
         /// </summary>
-        /// <param name="waitTime">Wait a specified amount of time before spawning</param>
-        public IEnumerator Spawn(float waitTime)
+        public override void SetDirection(Vector3 dir)
         {
-            if (spawnEvent != null)
-                spawnEvent();
-            lives--;
-            transform.localPosition = respawnPos;
-            yield return new WaitForSeconds(waitTime);
-            notificationText.gameObject.SetActive(false);
-            PacmanController.pacmanControlState = true;
-            AudioManager.PlayMusic(audioResources.sirenMusic);
+            queuedDir = dir;
+            if (CheckDirectionValidity(dir))
+                currentDir = queuedDir;
         }
 
         /// <summary>
@@ -106,9 +103,11 @@ namespace pacman
             currentDir = Vector3.zero;
             queuedDir = Vector3.zero;
             currentTargetObject = null;
+
             PacmanController.pacmanControlState = false;
             //clear direction
             AudioManager.musicSource.Stop();
+
             yield return new WaitForSeconds(constants.shortDelay);
             AudioManager.PlaySFX(pacmanDiesSFX);
             yield return new WaitForSeconds(pacmanDiesSFX.length);
@@ -121,13 +120,31 @@ namespace pacman
                 yield break;
             }
 
+            if (pacmanDiesEvent != null)
+                pacmanDiesEvent();
+
             notificationText.gameObject.SetActive(true);
             notificationText.text = "Ready!";
             notificationText.color = Color.yellow;
             yield return Spawn(1);
         }
 
+        /// <summary>
+        /// Spawn pacman
+        /// </summary>
+        /// <param name="waitTime">Wait a specified amount of time before spawning</param>
+        IEnumerator Spawn(float waitTime)
+        {
+            if (spawnEvent != null)
+                spawnEvent();
+            
+            lives--;
+            transform.localPosition = respawnPos;
+            yield return new WaitForSeconds(waitTime);
 
-           
+            AudioManager.PlayMusic(audioResources.sirenMusic);
+            notificationText.gameObject.SetActive(false);
+            PacmanController.pacmanControlState = true;
+        }
     }
 }

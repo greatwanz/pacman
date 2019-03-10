@@ -11,12 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774098488ae316447a46516243c27486, type: 3}
   m_Name: Clyde
   m_EditorClassIdentifier: 
-  ghostPrefab: {fileID: 114796871963293996, guid: 19e74e99a8441ec47b61aef398ad3ea4,
-    type: 2}
   eatGhostSFX: {fileID: 8300000, guid: 5f49a7cd1bb61ea46af8057617c35138, type: 3}
   initialColour: {r: 1, g: 0.50980395, b: 0, a: 0}
   initialState: {fileID: 11400000, guid: dd1022e121eec5149867df76a117fe73, type: 2}
   chaseState: {fileID: 11400000, guid: 90967f6f2dcac3d4abff3478cf2022c4, type: 2}
-  releaseAfterNumPacdots: 0
-  initPosition: {x: 1.6, y: 0, z: 4.85}
-  chaseSpeed: 1
+  releaseAfterScore: 100
+  chaseSpeed: 4
+  ghostRespawnPosition: {x: 0, y: 0, z: 3.23}

@@ -12,6 +12,8 @@ namespace pacman
         public int pacdotScoreValue;
         //Score gained for eating a power pellet
         public int powerPelletScoreValue;
+        //Score gained for eating a ghost
+        public int ghostEatenValue;
         //Number of lives pacman starts with
         public int startingLives;
         //Length of universal short delays
@@ -20,8 +22,7 @@ namespace pacman
         public int initFrightenedLoopCount;
         //Rate power pellet flashes
         public float powerPelletFlashRate;
-
-        public Vector3 ghostRespawnPosition;
+        //Position to indicate ghost has finished respawning
         public Vector3 respawnCompletePosition;
     }
 }

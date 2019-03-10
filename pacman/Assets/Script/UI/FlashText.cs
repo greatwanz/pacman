@@ -11,9 +11,11 @@ namespace pacman
     [RequireComponent(typeof(Text))]
     public class FlashText : MonoBehaviour
     {
+        //Time between each flash
         public float waitTime;
-
+        //Text to display
         Text text;
+        //Text to display
         string initString;
 
         // Use this for initialization

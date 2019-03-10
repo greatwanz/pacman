@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Reflection;
 using System;
-using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -13,14 +12,16 @@ namespace pacman
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        //Transform containing pacdots
         [AssertNotNull]public Transform pacdotsTransform;
+        //Text to show notifications
         [AssertNotNull]public Text notificationText;
+        //Global Audio resources
         [AssertNotNull]public AudioResources audioResources;
+        //Global constants
         [AssertNotNull]public Constants constants;
-        [AssertNotNull]public Variables variables;
 
         PacmanController pacmanController;
-
 
         void Awake()
         {
@@ -49,11 +50,11 @@ namespace pacman
             notificationText.gameObject.SetActive(true);
             notificationText.text = "Ready!";
             notificationText.color = Color.yellow;
+
             //Wait until space is pressed
             AudioManager.PlaySFX(audioResources.introMusic);
             yield return new WaitForSeconds(audioResources.introMusic.length);
             notificationText.gameObject.SetActive(false);
-            AudioManager.PlayMusic(audioResources.sirenMusic);
             //enable controls
             PacmanController.pacmanControlState = true;
         }
@@ -69,6 +70,7 @@ namespace pacman
             Destroy(pacmanController);
 
             AudioManager.musicSource.Stop();
+
             if (pacdotsTransform.childCount == 0)
             {
                 yield return new WaitForSeconds(constants.shortDelay);

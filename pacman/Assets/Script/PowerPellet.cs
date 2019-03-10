@@ -13,19 +13,18 @@ namespace pacman
         [AssertNotNull]public GhostState frightenedState;
         //Scatter state of ghosts
         [AssertNotNull]public GhostState scatterState;
-        [AssertNotNull]public AudioClip frightenedMusic;
+        //Global constants
         [AssertNotNull]public Constants constants;
-        [AssertNotNull]public Variables variables;
 
         //MeshRenderer of the power pellet
         MeshRenderer meshRenderer;
+        //Coroutine to flash power pellets
         Coroutine flashPowerPelletCoroutine;
-        GameManager gameManager;
+        //Reference to all ghosts
         GhostController[] ghosts;
 
         void Start()
         {
-            gameManager = FindObjectOfType<GameManager>();
             meshRenderer = GetComponent<MeshRenderer>();
             ghosts = FindObjectsOfType<GhostController>();
 
@@ -41,16 +40,34 @@ namespace pacman
         void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
+
             if (p != null)
             {
                 p.Score += constants.powerPelletScoreValue;
+
+                //Set loop count and start return to chase state countdown
+                GhostController.frightenedLoopCount = constants.initFrightenedLoopCount;
+                p.StartCoroutine(CountdownReturnToChaseState());
+
                 foreach (GhostController g in ghosts)
                 {
-                    //Set frightenedLoopCount to its initial value
-                    g.frightenedLoopCount = constants.initFrightenedLoopCount;
+                    //Set ghost's state to frightened as long as it is not in pen
+                    if (g.currentGhostState.GetType() != typeof(GhostWaitingInPenState))
+                        g.SetState(frightenedState);
                 }
-                GhostController.SetState(frightenedState);
                 Destroy(gameObject);
+            }
+        }
+
+        /// <summary>
+        /// Countdown of time remaining in frightened state
+        /// </summary>
+        IEnumerator CountdownReturnToChaseState()
+        {
+            while (GhostController.frightenedLoopCount > 0)
+            {
+                yield return new WaitForSeconds(constants.shortDelay);
+                GhostController.frightenedLoopCount--;
             }
         }
 
@@ -70,6 +87,5 @@ namespace pacman
                 meshRenderer.enabled = true;
             }
         }
-            
     }
 }

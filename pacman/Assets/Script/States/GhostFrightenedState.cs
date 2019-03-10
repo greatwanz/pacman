@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 using System.Collections;
 
 namespace pacman
@@ -14,55 +13,47 @@ namespace pacman
         public GhostState ghostChaseState;
         //Colour ghosts turn into when frightened
         public Color frightenedColour;
+        //Music to play during frightened state
         public AudioClip frightenedMusic;
-        static Coroutine unfrightenCoroutine;
 
         public override void Init(GhostController g)
         {
             g.meshRenderer.material.color = frightenedColour;
-            if (unfrightenCoroutine == null)
-            {
-                unfrightenCoroutine = g.StartCoroutine(Frighten(g));
-            }
+            AudioManager.PlayMusic(frightenedMusic);
+            g.StartCoroutine(TransitionFlash(g));
+            //Reverse direction of ghosts
+            g.SetDirection(-g.currentDir);
         }
 
         public override void Execute(GhostController g)
         {
+            if (g.currentTargetObject != null && g.transform.position == g.currentTargetObject.transform.position)
+            {
+                g.FindNewDirection();
+            }
 
+            g.MoveToTarget(g.ghost.chaseSpeed / 2);
         }
 
         /// <summary>
-        /// Unfrighten ghosts
+        /// Flash to warn user that ghost frighten state is about to end
         /// </summary>
-        public IEnumerator Frighten(GhostController g)
+        /// <param name="g">The ghost controller to flash</param>
+        IEnumerator TransitionFlash(GhostController g)
         {
-            AudioManager.PlayMusic(frightenedMusic);
-            g.StartCoroutine(TransitionFlash(g));
-            while (g.frightenedLoopCount > 0)
+            while (GhostController.frightenedLoopCount > 0 && g.currentGhostState.GetType() == typeof(GhostFrightenedState))
             {
-                yield return new WaitForSeconds(constants.shortDelay);
-                g.frightenedLoopCount--;
-            }
-            AudioManager.PlayMusic(audioResources.sirenMusic);
-            unfrightenCoroutine = null;
-            GhostController.SetState(ghostChaseState);
-        }
-
-        public IEnumerator TransitionFlash(GhostController g)
-        {
-            while (g.frightenedLoopCount != 0)
-            {
-                if (g.frightenedLoopCount < 3)
+                if (GhostController.frightenedLoopCount < 3)
                 {
                     g.meshRenderer.material.color = Color.white;
                     yield return new WaitForSeconds(.2f);
-                    if (g.frightenedLoopCount == 0)
-                        break;
                     g.meshRenderer.material.color = frightenedColour;
                     yield return new WaitForSeconds(.2f);
                 }
                 yield return null;
             }
+            yield return new WaitUntil(() => PacmanController.pacmanControlState);
+            g.SetState(ghostChaseState);
         }
     }
 }

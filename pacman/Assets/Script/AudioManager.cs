@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 namespace pacman
 {
     /// <summary>

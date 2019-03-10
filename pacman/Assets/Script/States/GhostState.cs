@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 namespace pacman
 {
@@ -10,8 +9,6 @@ namespace pacman
     {
         //Global constants
         public Constants constants;
-        //Global variables
-        public Variables variables;
         //Global audio resources
         public AudioResources audioResources;
 
@@ -26,7 +23,5 @@ namespace pacman
         /// </summary>
         /// <param name="g">The ghost the state is currently applied on</param>
         public abstract void Execute(GhostController g);
-
-       
     }
 }

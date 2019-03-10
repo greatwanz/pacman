@@ -13,12 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pacdotScoreValue: 10
   powerPelletScoreValue: 50
+  ghostEatenValue: 50
   startingLives: 3
   shortDelay: 1
   initFrightenedLoopCount: 5
   powerPelletFlashRate: 0.2
-  ghostRespawnPosition: {x: 0, y: 0, z: 3.4}
   respawnCompletePosition: {x: 0, y: 0, z: 4.7}
-  validMoveLayer:
-    serializedVersion: 2
-    m_Bits: 1024

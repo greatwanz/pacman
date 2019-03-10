@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 namespace pacman
 {
@@ -17,6 +16,5 @@ namespace pacman
         public override void Execute(GhostController g)
         {
         }
-
     }
 }

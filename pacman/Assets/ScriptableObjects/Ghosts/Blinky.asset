@@ -16,4 +16,5 @@ MonoBehaviour:
   initialState: {fileID: 11400000, guid: dd1022e121eec5149867df76a117fe73, type: 2}
   chaseState: {fileID: 11400000, guid: 90967f6f2dcac3d4abff3478cf2022c4, type: 2}
   releaseAfterScore: 0
-  chaseSpeed: 3
+  chaseSpeed: 4
+  ghostRespawnPosition: {x: 0, y: 0, z: 4.7}

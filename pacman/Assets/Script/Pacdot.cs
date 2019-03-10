@@ -8,7 +8,6 @@ namespace pacman
     public class Pacdot : MonoBehaviour
     {
         [AssertNotNull]public Constants constants;
-        [AssertNotNull]public Variables variables;
 
         void OnTriggerEnter(Collider col)
         {
@@ -30,5 +29,4 @@ namespace pacman
             }
         }
     }
-
 }

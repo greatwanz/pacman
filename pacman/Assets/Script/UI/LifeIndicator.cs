@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace pacman
 {
+    /// <summary>
+    /// Life indicator to show lives remaining
+    /// </summary>
     public class LifeIndicator : MonoBehaviour
     {
         //Life indicator prefab
@@ -23,6 +26,9 @@ namespace pacman
             }
         }
 
+        /// <summary>
+        /// Decreases the life quantity
+        /// </summary>
         void DecreaseLife()
         {
             Destroy(transform.GetChild(controller.lives - 1).gameObject);

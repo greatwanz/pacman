@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 namespace pacman
 {
     /// <summary>
-    /// Ghost scatter state. Ghosts scatter to the corners.
+    /// Ghost waiting in pen state
     /// </summary>
     [CreateAssetMenu(menuName = "GhostState/Ghost Waiting In Pen State")]
     public class GhostWaitingInPenState : GhostState
@@ -17,6 +16,5 @@ namespace pacman
         public override void Execute(GhostController g)
         {
         }
-
     }
 }

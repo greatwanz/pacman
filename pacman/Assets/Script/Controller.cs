@@ -1,26 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 
 namespace pacman
 {
-    public class Controller : MonoBehaviour
+    /// <summary>
+    /// Abstract controller class for GameObjects that can move in a direction
+    /// </summary>
+    public abstract class Controller : MonoBehaviour
     {
         //Layermask of collision objects
         public LayerMask layerMask;
         //Global constants
         [AssertNotNull]public Constants constants;
         //Global variables
-        [AssertNotNull]public Variables variables;
         //Which object pacman currently hits
-        [ReadOnlyAttribute][SerializeField]protected GameObject currentTargetObject;
+        [ReadOnlyAttribute]public GameObject currentTargetObject;
         //Last direction pacman travels
-        [ReadOnlyAttribute][SerializeField]protected Vector3 currentDir;
+        [ReadOnlyAttribute][SerializeField]public Vector3 currentDir;
         //Queued direction pacman travels in when possible
         [ReadOnlyAttribute][SerializeField]protected Vector3 queuedDir;
 
-        protected void MoveToTarget(float speed)
+        //Set direction to move
+        public abstract void SetDirection(Vector3 dir);
+
+        public void MoveToTarget(float speed)
         {
             //Don't allow controls if pacman isn't controllable
             if (!PacmanController.pacmanControlState)
@@ -42,22 +45,13 @@ namespace pacman
             }
         }
 
-        /// <summary>
-        /// Sets direction to move
-        /// </summary>
-        protected void SetDirection(Vector3 dir)
-        {
-            queuedDir = dir;
-            if (CheckDirectionValidity(dir))
-                currentDir = queuedDir;
-        }
 
         /// <summary>
         /// Check whether pacman collides with a collider in a particular direction
         /// </summary>
         /// <param name="dir">Direction to check</param>
         /// <param name="getFirstTarget">Whether to get first available target. Default: last target.</param>
-        protected virtual bool CheckDirectionValidity(Vector3 dir, bool getFirstTarget = false)
+        protected bool CheckDirectionValidity(Vector3 dir, bool getFirstTarget = false)
         {
             //Perform a raycast in direction dir, order by distance from pacman
             RaycastHit[] hitArray = Physics.RaycastAll(transform.position, dir, Mathf.Infinity, layerMask).OrderBy(h => h.distance).ToArray();
