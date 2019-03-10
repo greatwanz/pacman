@@ -9,12 +9,12 @@ namespace pacman
     [CreateAssetMenu(menuName = "GhostState/Ghost Scatter State")]
     public class GhostScatterState : GhostState
     {
-        public override void Init(GhostConsumable g)
+        public override void Init(GhostController g)
         {
             g.meshRenderer.material.color = g.ghost.initialColour;
         }
 
-        public override void Execute(GhostConsumable g)
+        public override void Execute(GhostController g)
         {
         }
 

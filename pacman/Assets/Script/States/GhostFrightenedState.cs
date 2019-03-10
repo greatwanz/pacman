@@ -17,16 +17,16 @@ namespace pacman
         public AudioClip frightenedMusic;
         static Coroutine unfrightenCoroutine;
 
-        public override void Init(GhostConsumable g)
+        public override void Init(GhostController g)
         {
             g.meshRenderer.material.color = frightenedColour;
             if (unfrightenCoroutine == null)
             {
-                g.StartCoroutine(Frighten());
+                unfrightenCoroutine = g.StartCoroutine(Frighten(g));
             }
         }
 
-        public override void Execute(GhostConsumable g)
+        public override void Execute(GhostController g)
         {
 
         }
@@ -34,18 +34,35 @@ namespace pacman
         /// <summary>
         /// Unfrighten ghosts
         /// </summary>
-        public IEnumerator Frighten()
+        public IEnumerator Frighten(GhostController g)
         {
             AudioManager.PlayMusic(frightenedMusic);
-
-            while (variables.frightenedLoopCount > 0)
+            g.StartCoroutine(TransitionFlash(g));
+            while (g.frightenedLoopCount > 0)
             {
                 yield return new WaitForSeconds(constants.shortDelay);
-                variables.frightenedLoopCount--;
+                g.frightenedLoopCount--;
             }
             AudioManager.PlayMusic(audioResources.sirenMusic);
             unfrightenCoroutine = null;
-            GhostConsumable.SetState(ghostChaseState);
+            GhostController.SetState(ghostChaseState);
+        }
+
+        public IEnumerator TransitionFlash(GhostController g)
+        {
+            while (g.frightenedLoopCount != 0)
+            {
+                if (g.frightenedLoopCount < 3)
+                {
+                    g.meshRenderer.material.color = Color.white;
+                    yield return new WaitForSeconds(.2f);
+                    if (g.frightenedLoopCount == 0)
+                        break;
+                    g.meshRenderer.material.color = frightenedColour;
+                    yield return new WaitForSeconds(.2f);
+                }
+                yield return null;
+            }
         }
     }
 }

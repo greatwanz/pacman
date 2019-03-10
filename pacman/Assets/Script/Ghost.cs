@@ -9,12 +9,11 @@ namespace pacman
     {
         //Sound effect to play when ghost is eaten
         [AssertNotNull]public AudioClip eatGhostSFX;
-        [AssertNotNull]public ChaseTarget chaseTarget;
 
         public Color initialColour;
         public GhostState initialState;
         public GhostState chaseState;
-        public int releaseAfterNumPacdots;
+        public int releaseAfterScore;
         public float chaseSpeed;
     }
 }

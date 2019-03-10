@@ -5,9 +5,12 @@ namespace pacman
     /// <summary>
     /// A consumable pacdot
     /// </summary>
-    public class PacdotConsumable : Consumable
+    public class Pacdot : MonoBehaviour
     {
-        protected override void OnTriggerEnter(Collider col)
+        [AssertNotNull]public Constants constants;
+        [AssertNotNull]public Variables variables;
+
+        void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
 

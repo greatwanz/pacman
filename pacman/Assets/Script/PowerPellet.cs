@@ -7,23 +7,28 @@ namespace pacman
     /// A consumable power pellet
     /// </summary>
     [RequireComponent(typeof(MeshRenderer))]
-    public class PowerPelletConsumable : Consumable
+    public class PowerPellet : MonoBehaviour
     {
         //Frightened state of ghosts
         [AssertNotNull]public GhostState frightenedState;
         //Scatter state of ghosts
         [AssertNotNull]public GhostState scatterState;
         [AssertNotNull]public AudioClip frightenedMusic;
+        [AssertNotNull]public Constants constants;
+        [AssertNotNull]public Variables variables;
 
         //MeshRenderer of the power pellet
         MeshRenderer meshRenderer;
         Coroutine flashPowerPelletCoroutine;
         GameManager gameManager;
+        GhostController[] ghosts;
 
         void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
             meshRenderer = GetComponent<MeshRenderer>();
+            ghosts = FindObjectsOfType<GhostController>();
+
             flashPowerPelletCoroutine = StartCoroutine(FlashPowerPellet());
         }
 
@@ -33,15 +38,18 @@ namespace pacman
                 StopCoroutine(flashPowerPelletCoroutine);
         }
 
-        protected override void OnTriggerEnter(Collider col)
+        void OnTriggerEnter(Collider col)
         {
             PacmanController p = col.GetComponent<PacmanController>();
             if (p != null)
             {
                 p.Score += constants.powerPelletScoreValue;
-                //Set frightenedLoopCount to its initial value
-                variables.frightenedLoopCount = constants.initFrightenedLoopCount;
-                GhostConsumable.SetState(frightenedState);
+                foreach (GhostController g in ghosts)
+                {
+                    //Set frightenedLoopCount to its initial value
+                    g.frightenedLoopCount = constants.initFrightenedLoopCount;
+                }
+                GhostController.SetState(frightenedState);
                 Destroy(gameObject);
             }
         }
@@ -55,10 +63,10 @@ namespace pacman
             {
                 yield return new WaitForSeconds(constants.powerPelletFlashRate);
                 //Wait until user has control before flashing power pellet
-                yield return new WaitUntil(() => variables.pacmanControlState);
+                yield return new WaitUntil(() => PacmanController.pacmanControlState);
                 meshRenderer.enabled = false;
                 yield return new WaitForSeconds(constants.powerPelletFlashRate);
-                yield return new WaitUntil(() => variables.pacmanControlState);
+                yield return new WaitUntil(() => PacmanController.pacmanControlState);
                 meshRenderer.enabled = true;
             }
         }

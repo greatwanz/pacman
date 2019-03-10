@@ -9,23 +9,14 @@ namespace pacman
     /// <summary>
     /// Player controller that controls pacman
     /// </summary>
-    public class PacmanController : MonoBehaviour
+    public class PacmanController : Controller
     {
-        //Which object pacman currently hits
-        [ReadOnlyAttribute]public GameObject currentTargetObject;
-        //Last direction pacman travels
-        [ReadOnlyAttribute]public Vector3 currentDir;
-        //Queued direction pacman travels in when possible
-        [ReadOnlyAttribute]public Vector3 queuedDir;
+        //Whether pacman can be controlled
+        public static bool pacmanControlState;
         //Lives pacman has remaining
         [ReadOnlyAttribute]public int lives;
-
         //Global audio resources
         [AssertNotNull]public AudioResources audioResources;
-        //Global constants
-        [AssertNotNull]public Constants constants;
-        //Global variables
-        [AssertNotNull]public Variables variables;
         //Text on screen to notify player
         [AssertNotNull]public Text notificationText;
         //Score indicator
@@ -37,14 +28,14 @@ namespace pacman
         //'Ka' sfx
         [AssertNotNull]public AudioClip kaSFX;
 
-        //Distance to detect collisions
-        public float collisionDistance;
-        //Layermask of collision objects
-        public LayerMask layerMask;
+        //Move speed of pacman
+        public float pacmanSpeed;
         //Is 'Ka' the sound effect currently played?
         public bool isKa;
         //Default speed of pacman
         public int defaultSpeed;
+        //Localposition pacman respawns at
+        public Vector3 respawnPos;
 
         public event Action spawnEvent;
 
@@ -68,17 +59,16 @@ namespace pacman
 
         IEnumerator Start()
         {
-            variables.pacmanSpeed = defaultSpeed;
+            pacmanSpeed = defaultSpeed;
             lives = constants.startingLives;
             //Wait until pacman becomes controllable
-            yield return new WaitUntil(() => variables.pacmanControlState);
+            yield return new WaitUntil(() => PacmanController.pacmanControlState);
             //Spawn pacman without waiting
             yield return Spawn(0);
         }
 
         void Update()
         {
-
             //Set direction according to arrow key pressed
             if (Input.GetKeyDown(KeyCode.LeftArrow))
                 SetDirection(-transform.right);
@@ -89,34 +79,7 @@ namespace pacman
             else if (Input.GetKeyDown(KeyCode.UpArrow))
                 SetDirection(transform.forward);
 
-            //Don't allow controls if pacman isn't controllable
-            if (!variables.pacmanControlState)
-                return;
-
-            //If current direction pacman is travelling is not the queued direction, and the queued direction is valid
-            //Set current direction to queued direction
-            if (currentDir != queuedDir && CheckDirectionValidity(queuedDir))
-            {
-                currentDir = queuedDir;
-            }
-            else
-            {
-                //Move in the current direction towards target
-                if (currentTargetObject != null)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, currentTargetObject.transform.position, variables.pacmanSpeed * Time.deltaTime);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets direction to move
-        /// </summary>
-        public void SetDirection(Vector3 dir)
-        {
-            queuedDir = dir;
-            if (CheckDirectionValidity(dir))
-                currentDir = queuedDir;
+            MoveToTarget(pacmanSpeed);
         }
 
         /// <summary>
@@ -128,10 +91,10 @@ namespace pacman
             if (spawnEvent != null)
                 spawnEvent();
             lives--;
-            transform.localPosition = constants.pacmanRespawnPosition;
+            transform.localPosition = respawnPos;
             yield return new WaitForSeconds(waitTime);
             notificationText.gameObject.SetActive(false);
-            variables.pacmanControlState = true;
+            PacmanController.pacmanControlState = true;
             AudioManager.PlayMusic(audioResources.sirenMusic);
         }
 
@@ -143,7 +106,7 @@ namespace pacman
             currentDir = Vector3.zero;
             queuedDir = Vector3.zero;
             currentTargetObject = null;
-            variables.pacmanControlState = false;
+            PacmanController.pacmanControlState = false;
             //clear direction
             AudioManager.musicSource.Stop();
             yield return new WaitForSeconds(constants.shortDelay);
@@ -164,56 +127,7 @@ namespace pacman
             yield return Spawn(1);
         }
 
-        /// <summary>
-        /// Pacman consumes a ghost
-        /// </summary>
-        /// <param name="g">Ghost consumed</param>
-        /// <param name="audioClip">Audioclip to play on consumption</param>
-        public IEnumerator ConsumeGhost(GhostConsumable g, AudioClip audioClip)
-        {
-            variables.pacmanControlState = false;
-            g.transform.localPosition = constants.ghostRespawnPosition;
-            AudioManager.musicSource.Pause();
-            AudioManager.PlaySFX(audioClip);
-            yield return new WaitForSeconds(audioClip.length);
-            AudioManager.musicSource.UnPause();
-            variables.pacmanControlState = true;
-        }
 
-        /// <summary>
-        /// Check whether pacman collides with a collider in a particular direction
-        /// </summary>
-        /// <param name="dir">Direction to checl</param>
-        bool CheckDirectionValidity(Vector3 dir)
-        {
-            //Perform a raycast in direction dir, order by distance from pacman
-            RaycastHit[] hitArray = Physics.RaycastAll(transform.position, dir, Mathf.Infinity, layerMask).OrderBy(h => h.distance).ToArray();
-
-            Transform targetHit = null;
-
-            //Loop finds furthest target before hitting a wall
-            for (int i = 0; i < hitArray.Length; ++i)
-            {
-                //If object hit is in validmove layer, set it as the target
-                if (hitArray[i].transform.gameObject.layer == LayerMask.NameToLayer("ValidMove"))
-                {
-                    targetHit = hitArray[i].transform;
-                    continue;
-                }
-
-                //End loop if raycast hits wall
-                if (hitArray[i].transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
-                    break;
-            }
-
-            //If a target transform was hit, set it as the target object pacman moves towards
-            if (targetHit != null)
-            {
-                currentTargetObject = targetHit.gameObject;
-                return true;
-            }
-
-            return false;
-        }
+           
     }
 }

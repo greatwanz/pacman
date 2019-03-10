@@ -20,9 +20,8 @@ namespace pacman
         public int initFrightenedLoopCount;
         //Rate power pellet flashes
         public float powerPelletFlashRate;
-        //Position ghosts respawn at
-        //        public Transform ghostRespawnPosition;
-        //Position pacman respawns at
-        public Transform pacmanRespawnPosition;
+
+        public Vector3 ghostRespawnPosition;
+        public Vector3 respawnCompletePosition;
     }
 }

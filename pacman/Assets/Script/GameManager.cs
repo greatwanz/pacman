@@ -28,7 +28,7 @@ namespace pacman
             {
                 AttributeAssert(AssertFieldNotNull);
             }
-            variables.pacmanControlState = false;
+            PacmanController.pacmanControlState = false;
         }
 
         void Start()
@@ -55,7 +55,7 @@ namespace pacman
             notificationText.gameObject.SetActive(false);
             AudioManager.PlayMusic(audioResources.sirenMusic);
             //enable controls
-            variables.pacmanControlState = true;
+            PacmanController.pacmanControlState = true;
         }
 
         IEnumerator PlayingGame()
@@ -65,7 +65,7 @@ namespace pacman
 
         IEnumerator EndGame()
         {
-            variables.pacmanControlState = false;
+            PacmanController.pacmanControlState = false;
             Destroy(pacmanController);
 
             AudioManager.musicSource.Stop();

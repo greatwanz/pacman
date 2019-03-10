@@ -39,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756868687605738}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.100000024, y: 0, z: -9.8}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalPosition: {x: 0, y: -17.43, z: -10.599999}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,7 +100,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!82 &82737428241315364
 AudioSource:
@@ -217,13 +217,13 @@ MonoBehaviour:
   variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
   notificationText: {fileID: 0}
   scoreText: {fileID: 0}
-  pacmanDiesSFX: {fileID: 0}
+  pacmanDiesSFX: {fileID: 8300000, guid: 258fed3042da8644ebbe40876499bd4e, type: 3}
   waSFX: {fileID: 8300000, guid: 37d7f20570945f741bc27c231ef9364f, type: 3}
   kaSFX: {fileID: 8300000, guid: e9da1e282b39bb246848c420a99fb0f6, type: 3}
   collisionDistance: 0.1
   layerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1536
   isKa: 0
   defaultSpeed: 6
 --- !u!135 &135084473468672626

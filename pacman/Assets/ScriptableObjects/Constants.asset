@@ -17,5 +17,8 @@ MonoBehaviour:
   shortDelay: 1
   initFrightenedLoopCount: 5
   powerPelletFlashRate: 0.2
-  ghostRespawnPosition: {x: 0, y: -0.5500002, z: 4.8425}
-  pacmanRespawnPosition: {x: 0, y: 0, z: -5.1}
+  ghostRespawnPosition: {x: 0, y: 0, z: 3.4}
+  respawnCompletePosition: {x: 0, y: 0, z: 4.7}
+  validMoveLayer:
+    serializedVersion: 2
+    m_Bits: 1024

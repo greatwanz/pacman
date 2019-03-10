@@ -96,10 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402d60b3a5dac4d449be148a815b4813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1536
   constants: {fileID: 11400000, guid: 959c6fec5db59804580c41d888da1d65, type: 2}
   variables: {fileID: 11400000, guid: 17b0ac906fa6cae4a9a48adb3a6ef93b, type: 2}
+  currentTargetObject: {fileID: 0}
+  currentDir: {x: 0, y: 0, z: 0}
+  queuedDir: {x: 0, y: 0, z: 0}
   currentGhostState: {fileID: 0}
-  targetIndex: 0
+  ghost: {fileID: 0}
+  initialTargetObject: {fileID: 0}
 --- !u!135 &135521451514095666
 SphereCollider:
   m_ObjectHideFlags: 1
